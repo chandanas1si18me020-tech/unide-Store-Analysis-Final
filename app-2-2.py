@@ -238,7 +238,7 @@ with st.sidebar:
             unsafe_allow_html=True
         )
         st.divider()
-        st.caption(f"📍 {store.get('address','')}")
+        st.caption(f" {store.get('address','')}")
         st.caption(f"Store ID: {store['store_id']}")
         st.caption(f"Floor: {int(store['floor_size'])} m²  |  {store['replenishment']}x/week")
         st.caption(f"Best match: {store['best_y']}x/week")
@@ -252,15 +252,15 @@ if not store:
 # ══════════════════════════════════════════════════════════════════
 st.title(f"{store['brand']}  —  {store['city']}, {store['province']}")
 if store.get("address"):
-    st.caption(f"📍 {store['address']}  |  Store ID: {store['store_id']}")
+    st.caption(f" {store['address']}  |  Store ID: {store['store_id']}")
 
 t1, t2, t3, t4, t5, t6 = st.tabs([
-    "🗺  Map & Overview",
-    "📊  What-If Analysis",
-    "⚔  Competitor Threat",
-    "🛒  Category Risk",
-    "📦  Spoilage Overview",
-    "🔄  Store Comparison"
+    "  Map & Overview",
+    "  What-If Analysis",
+    "  Competitor Threat",
+    "  Category Risk",
+    "  Spoilage Overview",
+    "  Store Comparison"
 ])
 
 # ── TAB 1 ──────────────────────────────────────────────────────────
@@ -483,7 +483,7 @@ with t5:
     for _, row in df.iterrows():
         y2    = row.get("yoy_change",0)
         sl    = SHELF_LIFE.get(row["Category"],0)
-        trend = "📈 Worse" if y2>0.5 else "📉 Better" if y2<-0.5 else "➡ Stable"
+        trend = " Worse" if y2>0.5 else " Better" if y2<-0.5 else "➡ Stable"
         sign  = "+" if y2>=0 else ""
         rows.append({
             "Category"  : row["Category"],
