@@ -461,76 +461,9 @@ with t4:
     else:
         st.info("No category risk data available")
 
+
 # ── TAB 5 ──────────────────────────────────────────────────────────
 with t5:
-    st.subheader("Warehouse Spoilage Overview — All 18 Categories")
-    df  = pd.DataFrame(SPOILAGE).sort_values("rate_2025", ascending=False)
-    t24 = df["spoilage_2024"].sum()
-    s24 = df["sales_2024"].sum()
-    t25 = df["spoilage_2025"].sum()
-    s25 = df["sales_2025"].sum()
-    r24 = round(t24/s24*100,2) if s24>0 else 0
-    r25 = round(t25/s25*100,2) if s25>0 else 0
-    yov = round(r25-r24,2)
-
-    a, b, c = st.columns(3)
-    with a: md_card("Overall Rate 2024", f"{r24}%")
-    with b: md_card("Overall Rate 2025", f"{r25}%")
-    with c: md_card("YoY Change", f"{'+' if yov>0 else ''}{yov}%")
-
-    st.divider()
-    rows = []
-    for _, row in df.iterrows():
-        y2    = row.get("yoy_change",0)
-        sl    = SHELF_LIFE.get(row["Category"],0)
-        trend = " Worse" if y2>0.5 else " Better" if y2<-0.5 else "➡ Stable"
-        sign  = "+" if y2>=0 else ""
-        rows.append({
-            "Category"  : row["Category"],
-            "Shelf Life": f"{sl}d",
-            "Rate 2024" : f"{round(row.get('rate_2024',0),2)}%",
-            "Rate 2025" : f"{round(row.get('rate_2025',0),2)}%",
-            "YoY"       : f"{sign}{round(y2,2)}%",
-            "Trend"     : trend
-        })
-
-    table_rows = ""
-    for i, row in enumerate(rows):
-        yoy_val = row["YoY"].replace("+","").replace("%","")
-        try:
-            yoy_f   = float(yoy_val)
-            yoy_col = "#A93226" if yoy_f>0.5 else "#1A7A4A" if yoy_f<-0.5 else "#B7770D"
-        except:
-            yoy_col = "#1A1A1A"
-        bg = "#F8F9FA" if i%2==0 else "#FFFFFF"
-        table_rows += (
-            f"<tr style='border-bottom:1px solid #E0E0E0;background:{bg};'>"
-            f"<td style='padding:10px 14px;color:#1A1A1A;font-weight:600;'>{row['Category']}</td>"
-            f"<td style='padding:10px 14px;color:#555;text-align:center;'>{row['Shelf Life']}</td>"
-            f"<td style='padding:10px 14px;color:#444;text-align:center;'>{row['Rate 2024']}</td>"
-            f"<td style='padding:10px 14px;color:#1A1A1A;font-weight:700;text-align:center;'>{row['Rate 2025']}</td>"
-            f"<td style='padding:10px 14px;color:{yoy_col};font-weight:700;text-align:center;'>{row['YoY']}</td>"
-            f"<td style='padding:10px 14px;color:#444;text-align:center;'>{row['Trend']}</td>"
-            f"</tr>"
-        )
-    st.markdown(
-        f"<div style='overflow-x:auto;border:1.5px solid #D0D0D0;border-radius:8px;'>"
-        f"<table style='width:100%;border-collapse:collapse;background:white;'>"
-        f"<thead><tr style='background:#F0F0F0;'>"
-        f"<th style='padding:12px 14px;color:#C0550A;text-align:left;font-size:12px;letter-spacing:1px;border-bottom:2px solid #D0D0D0;'>CATEGORY</th>"
-        f"<th style='padding:12px 14px;color:#C0550A;text-align:center;font-size:12px;letter-spacing:1px;border-bottom:2px solid #D0D0D0;'>SHELF LIFE</th>"
-        f"<th style='padding:12px 14px;color:#C0550A;text-align:center;font-size:12px;letter-spacing:1px;border-bottom:2px solid #D0D0D0;'>RATE 2024</th>"
-        f"<th style='padding:12px 14px;color:#C0550A;text-align:center;font-size:12px;letter-spacing:1px;border-bottom:2px solid #D0D0D0;'>RATE 2025</th>"
-        f"<th style='padding:12px 14px;color:#C0550A;text-align:center;font-size:12px;letter-spacing:1px;border-bottom:2px solid #D0D0D0;'>YOY</th>"
-        f"<th style='padding:12px 14px;color:#C0550A;text-align:center;font-size:12px;letter-spacing:1px;border-bottom:2px solid #D0D0D0;'>TREND</th>"
-        f"</tr></thead>"
-        f"<tbody>{table_rows}</tbody>"
-        f"</table></div>",
-        unsafe_allow_html=True
-    )
-
-# ── TAB 6 ──────────────────────────────────────────────────────────
-with t6:
     st.subheader("Store Comparison")
     ca, cb = st.columns(2)
     with ca: na = st.selectbox("STORE A", SOPTS, index=0, key="sa")
