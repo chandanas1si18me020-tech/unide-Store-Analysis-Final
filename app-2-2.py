@@ -254,12 +254,11 @@ st.title(f"{store['brand']}  —  {store['city']}, {store['province']}")
 if store.get("address"):
     st.caption(f" {store['address']}  |  Store ID: {store['store_id']}")
 
-t1, t2, t3, t4, t5, t6 = st.tabs([
+t1, t2, t3, t4, t5 = st.tabs([
     "  Map & Overview",
     "  What-If Analysis",
     "  Competitor Threat",
     "  Category Risk",
-    "  Spoilage Overview",
     "  Store Comparison"
 ])
 
