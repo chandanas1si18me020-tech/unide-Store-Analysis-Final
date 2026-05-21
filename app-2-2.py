@@ -7,7 +7,7 @@ import math
 import pandas as pd
 
 st.set_page_config(
-    page_title="Unide Store Analysis",
+    page_title="TradeCircle",
     layout="wide",
     initial_sidebar_state="expanded"
 )
