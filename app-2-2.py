@@ -213,7 +213,7 @@ def make_map(store, show_stores, show_comps, show_census):
 # SIDEBAR
 # ══════════════════════════════════════════════════════════════════
 with st.sidebar:
-    st.title("Unide Store Analysis")
+    st.title("TradeCircle")
     st.caption("Neighbourhood Demand & Spoilage Analysis")
     st.divider()
     sel   = st.selectbox("SELECT STORE", SOPTS, index=0)
